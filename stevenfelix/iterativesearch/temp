@@ -1,0 +1,41 @@
+                    if(dp[j][i]==mx){
+                            x.clear();
+                            y.clear();
+                            for(l=0;l<n;l++){
+                                if(row[l]){
+                                    x.push_back(dp[l][a]);
+                                    y.push_back(dp[l][i]);
+                                }
+                            }
+                        }
+                        sort(x.begin(), x.end());
+                        sort(y.begin(), y.end());
+                        for(i=0;i<x.size();i++){
+                            if(x[i]>y[i]) break;
+                            else if(x[i]<y[i]){
+                                a = i;
+                                b = j;
+                                break;
+                            }
+                        }
+                        if(dp[i][j]==mx){
+                            x.clear();
+                            y.clear();
+                            for(l=0;l<n;l++){
+                                if(col[l]){
+                                    x.push_back(dp[a][l]);
+                                    y.push_back(dp[i][l]);
+                                }
+                            }
+                        }
+                        sort(x.begin(), x.end());
+                        sort(y.begin(), y.end());
+                        for(i=0;i<x.size();i++){
+                            if(x[i]<y[i]) break;
+                            else if(x[i]>y[i]){
+                                a = i;
+                                b = j;
+                                break;
+                            }
+                        }
+                    }
