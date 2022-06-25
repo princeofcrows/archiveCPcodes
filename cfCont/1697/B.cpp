@@ -3,7 +3,7 @@
 using namespace std;
 
 #define mx 400005
-//#define int long long
+#define int long long
 #define pii pair <int, int>
 #define piii pair <int, pii>
 #define fi first
@@ -18,32 +18,32 @@ using namespace std;
 #define write() freopen("out.txt", "w", stdout)
 #define fst ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-int ara[105];
+int ara[mx];
 
 int32_t main(){
 	//read();
 	//write();
 	fst;
 
-	int t;
-	cin >> t;
-	while(t--) {
-		int n, m;
-		cin >> n >> m;
-
-		int cur = m, ans = 0;
-		for(int i=0; i<n; i++) {
+	int n, q;
+	while(cin >> n >> q) {
+		for(int i=1; i<=n; i++) {
 			cin >> ara[i];
-
-			if(cur < ara[i]) {
-				ans += (ara[i] - cur);
-				cur = 0;
-			} else {
-				cur -= ara[i];
-			}
 		}
 
-		cout << ans << "\n";
+		sort(ara, ara+n+1);
+		for(int i=1; i<=n; i++) {
+			ara[i] += ara[i-1];
+		}
+
+
+		while(q--) {
+			int x, y;
+			cin >> x >> y;
+			int ans = ara[n - x + y] - ara[n - x];
+			cout << ans << endl;
+		}
+
 	}
 	return 0;
 }
