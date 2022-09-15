@@ -1,0 +1,118 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define mx 500005
+#define int long long
+#define pii pair <int, int>
+#define piii pair <int, pii>
+#define fi first
+#define se second
+#define mod 135118961
+#define inf 1e18+19
+#define pb push_back
+#define sil(x) scanf("%lld", &x)
+#define si(x) scanf("%d", &x)
+#define mem(ara, x) memset(ara, x, sizeof ara)
+#define read() freopen("consecutive_cuts_chapter_1_input.txt", "r", stdin)
+#define write() freopen("consecutive_cuts_chapter_1_output.txt", "w", stdout)
+#define fst ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+int a[mx], b[mx];
+
+int binPowRec(int num, int p) {
+	if (p == 0) return 1;
+
+	int res = binPowRec(num, p / 2);
+	res = (res * res) % mod;
+
+	if (p % 2) {
+		return (res *  num) % mod;
+	}
+	else {
+		return (res) % mod;
+	}
+}
+
+bool solve(int seed, int n, int k) {
+	int ha = 0, hb = 0, base = 1;
+
+	for(int i=0; i<n; i++) {
+		ha = (ha + a[i] * base) % mod;
+		hb = (hb + b[i] * base) % mod;
+
+		base = (base * seed) % mod;
+	}
+
+	if(k == 0) return ha == hb;
+	if(ha == hb) {
+		if(k%2 == 0) return true;
+		if(k >= 3 && n > 2) return true;
+		return false;
+	}
+	if(n == 2) {
+		if(k %2) return true;
+		return false;
+	}
+
+	int minMove = 0, maxMove = 0, invSeed = binPowRec(seed, mod-2), cnt = 0;
+	bool flag = false;
+	//cout << invSeed << endl;
+
+	for(int i=0; i<n; i++) {
+		if(ha == hb) {
+			flag = true;
+			maxMove = cnt;
+		}
+
+		//cout << ha << " " << hb << endl;
+
+		ha = (((ha - a[i] + a[i] * base) % mod) + mod) % mod;
+		ha = (ha + mod) % mod;
+		ha = (ha * invSeed) % mod;
+
+		minMove = 1;
+		cnt++;
+	}
+
+	if(!flag) return false;
+	if(k >= minMove && k <= maxMove) return true;
+	if(minMove - maxMove != 0) return true;
+
+	//if(k >= minMove) return true;
+	int movLeft = k - minMove;
+
+	if(movLeft %2) return true;
+	else {
+		if(n > 2) return true;
+	}
+	return false;
+}
+
+int32_t main(){
+	read();
+	write();
+	fst;
+	int t, cs = 1;
+	cin >> t;
+	while(t--) {
+		int n, k;
+		cin >> n >> k;
+
+
+		for(int i=0; i<n; i++) {
+			cin >> a[i];
+		}
+		for(int i=0; i<n; i++) {
+			cin >> b[i];
+		}
+
+		bool f1 = solve(97, n, k);
+		bool f2 = solve(827, n, k);
+
+		if(f1 && f2) cout << "Case #" << cs++ <<": YES\n";
+		else cout << "Case #" << cs++ <<": NO\n";
+	}
+
+	return 0;
+}
