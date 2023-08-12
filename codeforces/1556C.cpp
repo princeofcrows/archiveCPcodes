@@ -72,86 +72,51 @@ void no() {
 	cout << "NO\n";
 }
 
-string preSufEx(string s) {
-	int l = 0, h = s.length() - 1;
-	string res = "";
-
-	while(l < h) {
-		if(s[l] == s[h]) {
-			res += s[l];
-			l++;
-			h--;
-		} else {
-			break;
-		}
-	}
-
-	return res;
-}
-
-string prePal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	fr(i, start, end) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, i - start + 1);
-		}
-	}
-
-	fr(i, start, start + len) {
-		res += s[i];
-	}
-
-	return res;
-}
-
-string suffPal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	rfr(i, end, start) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, end - i);
-		}
-	}
-
-	rfr(i, end, end - len) {
-		res += s[i];
-	}
-
-	return res;
-}
+int ara[1005];
 
 int32_t main(){
 	//rin();
 	//wrout();
 	fst;
+	int n;
 
-	int t;
-	cin >> t;
+	while(cin >> n) {
+		fr(i, 0, n) {
+			cin >> ara[i];
+		}
 
-	while(t--) {
-		string str;
-		cin >> str;
+		int ans = 0;
+		for(int i=0; i<n; i+=2) {
+			int cnt[] = {0, 0};
+			int cusum = inf;
 
-		string preSuf = preSufEx(str);
-		int start = preSuf.length(), end = str.length() - start;
-		string p = prePal(str, start, end), s = suffPal(str, start, end);
+			fr(j, i, n) {
+				cnt[j%2] += ara[j];
 
-		cout << preSuf;
-		cout << (p.length() > s.length() ? p : s);
+				if(j%2) {
+					int x = cnt[0] - cnt[1];
 
-		rev_all(preSuf);
-		cout << preSuf << endl;
+					if(x >= 0) {
+						if(cusum == inf) {
+							ans += min(ara[i] - x, ara[j]);
+						}
+						else if(x <= cusum) {
+							ans += max(0LL, min(ara[j], min(ara[i] - x, cusum-x+1LL)));
+						}
+
+						cusum = min(cusum, x);
+					}
+					else {
+						ans += max(min(ara[j] + x, min(ara[i], cusum + 1LL)), 0LL);
+
+						//cout << i << " " << j << " " << ans << " " <<  max(min(ara[j] + x, min(ara[i], cusum)), 0LL) << endl;
+						break;
+					}
+				}
+			}
+		}
+
+		cout << ans << endl;
 	}
 	return 0;
 }

@@ -72,86 +72,55 @@ void no() {
 	cout << "NO\n";
 }
 
-string preSufEx(string s) {
-	int l = 0, h = s.length() - 1;
-	string res = "";
-
-	while(l < h) {
-		if(s[l] == s[h]) {
-			res += s[l];
-			l++;
-			h--;
-		} else {
-			break;
+void test() {
+	ifr(i, 1, 32) {
+		ifr(j, i+1, i*2) {
+			int x = j - i;
+			if((i&x) == x) {
+				cout << i << " -----> " << j << endl;
+			}
 		}
 	}
 
-	return res;
-}
-
-string prePal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	fr(i, start, end) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, i - start + 1);
-		}
-	}
-
-	fr(i, start, start + len) {
-		res += s[i];
-	}
-
-	return res;
-}
-
-string suffPal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	rfr(i, end, start) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, end - i);
-		}
-	}
-
-	rfr(i, end, end - len) {
-		res += s[i];
-	}
-
-	return res;
+	// 1101
+	// 11001
 }
 
 int32_t main(){
 	//rin();
 	//wrout();
 	fst;
+	//test();
 
 	int t;
 	cin >> t;
 
 	while(t--) {
-		string str;
-		cin >> str;
+		int u, v;
+		cin >> u >> v;
 
-		string preSuf = preSufEx(str);
-		int start = preSuf.length(), end = str.length() - start;
-		string p = prePal(str, start, end), s = suffPal(str, start, end);
+		if(u > v) {
+			no();
+			continue;
+		}
 
-		cout << preSuf;
-		cout << (p.length() > s.length() ? p : s);
+		bool flag = true;
+		int cnt = 0;
+		fr(i, 0, 31) {
+			cnt += (u % 2);
+			cnt -= (v % 2);
 
-		rev_all(preSuf);
-		cout << preSuf << endl;
+			if(cnt < 0 ) {
+				flag = false;
+				break;
+			}
+
+			u /= 2;
+			v /= 2;
+		}
+
+		if(flag) yes();
+		else no();
 	}
 	return 0;
 }

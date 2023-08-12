@@ -27,7 +27,7 @@ using namespace std;
 #define mem(ara, x) memset(ara, x, sizeof ara)
 
 // Const
-#define mod 28722900390631
+#define mod 998244353
 #define inf 1e18+19
 #define mx 200015
 #define pi acos(-1.0)
@@ -72,86 +72,34 @@ void no() {
 	cout << "NO\n";
 }
 
-string preSufEx(string s) {
-	int l = 0, h = s.length() - 1;
-	string res = "";
-
-	while(l < h) {
-		if(s[l] == s[h]) {
-			res += s[l];
-			l++;
-			h--;
-		} else {
-			break;
-		}
-	}
-
-	return res;
-}
-
-string prePal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	fr(i, start, end) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, i - start + 1);
-		}
-	}
-
-	fr(i, start, start + len) {
-		res += s[i];
-	}
-
-	return res;
-}
-
-string suffPal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	rfr(i, end, start) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, end - i);
-		}
-	}
-
-	rfr(i, end, end - len) {
-		res += s[i];
-	}
-
-	return res;
-}
+int ara[mx];
 
 int32_t main(){
 	//rin();
 	//wrout();
 	fst;
+	int n;
 
-	int t;
-	cin >> t;
+	while(cin >> n) {
+		ara[0] = 1;
+		ifr(i, 1, n) ara[i] = (ara[i-1] * 10) % mod;
 
-	while(t--) {
-		string str;
-		cin >> str;
+		//cout << ara[n] << endl;
+		ifr(i, 1, n) {
+			int ans = 0;
+			int z = n - i + 1;
 
-		string preSuf = preSufEx(str);
-		int start = preSuf.length(), end = str.length() - start;
-		string p = prePal(str, start, end), s = suffPal(str, start, end);
+			if(z > 2) {
+				ans = (ans + (z - 2) * 10 * 81 * ara[z - 3]) % mod;
+				ans = (ans +  20 * 9 * ara[z - 2]) % mod;
+			} else if(z == 2) {
+				ans = (ans +  10 * 9 * 2) % mod;
+			} else if(z == 1) {
+				ans = 10;
+			}
 
-		cout << preSuf;
-		cout << (p.length() > s.length() ? p : s);
-
-		rev_all(preSuf);
-		cout << preSuf << endl;
+			cout << ans << " ";
+		}
 	}
 	return 0;
 }

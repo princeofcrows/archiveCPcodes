@@ -23,15 +23,14 @@ using namespace std;
 #define ub upper_bound
 #define all(v) v.begin(), v.end()
 #define sort_all(v) sort(all(v));
-#define rev_all(v) reverse(all(v));
+#define rev_all(v) rev(all(v));
 #define mem(ara, x) memset(ara, x, sizeof ara)
 
 // Const
-#define mod 28722900390631
+#define mod 1000000007
 #define inf 1e18+19
 #define mx 200015
 #define pi acos(-1.0)
-#define seed 997
 
 // Input Output
 #define sild(x) scanf("%lld", &x)
@@ -72,86 +71,46 @@ void no() {
 	cout << "NO\n";
 }
 
-string preSufEx(string s) {
-	int l = 0, h = s.length() - 1;
-	string res = "";
-
-	while(l < h) {
-		if(s[l] == s[h]) {
-			res += s[l];
-			l++;
-			h--;
-		} else {
-			break;
-		}
-	}
-
-	return res;
-}
-
-string prePal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	fr(i, start, end) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, i - start + 1);
-		}
-	}
-
-	fr(i, start, start + len) {
-		res += s[i];
-	}
-
-	return res;
-}
-
-string suffPal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	rfr(i, end, start) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, end - i);
-		}
-	}
-
-	rfr(i, end, end - len) {
-		res += s[i];
-	}
-
-	return res;
-}
+int ara[104][40];
 
 int32_t main(){
 	//rin();
 	//wrout();
 	fst;
+	int n;
 
-	int t;
-	cin >> t;
+	while(cin >> n) {
+		mem(ara, -1);
 
-	while(t--) {
-		string str;
-		cin >> str;
+		fr(i, 0, n) {
+			int c;
+			cin >> c;
 
-		string preSuf = preSufEx(str);
-		int start = preSuf.length(), end = str.length() - start;
-		string p = prePal(str, start, end), s = suffPal(str, start, end);
+			fr(j, 0, c) {
+				int a;
+				cin >> a;
 
-		cout << preSuf;
-		cout << (p.length() > s.length() ? p : s);
+				ara[i][a] = c;
+			}
+		}
+		int x, ans = mod;
+		cin >> x;
+		vector <int> res;
 
-		rev_all(preSuf);
-		cout << preSuf << endl;
+		fr(i, 0, n) {
+			if(ara[i][x] != -1 ) {
+				if(ara[i][x] == ans) res.pb(i+1);
+				else if(ara[i][x] < ans) {
+					ans = ara[i][x];
+					res.clear();
+					res.pb(i+1);
+				}
+			}
+		}
+
+		cout << res.size() << endl;
+		for(auto u: res) cout << u << " ";
+		cout << endl;
 	}
 	return 0;
 }

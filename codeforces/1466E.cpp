@@ -27,9 +27,9 @@ using namespace std;
 #define mem(ara, x) memset(ara, x, sizeof ara)
 
 // Const
-#define mod 28722900390631
+#define mod 1000000007
 #define inf 1e18+19
-#define mx 200015
+#define mx 500015
 #define pi acos(-1.0)
 #define seed 997
 
@@ -55,13 +55,13 @@ ll lcm(ll a,ll b) {
 }
 
 int Set(int N,int pos){
-	return N=N | (1<<pos);
+	return N=N | (1LL<<pos);
 }
 int reset(int N,int pos){
-	return N= N & ~(1<<pos);
+	return N= N & ~(1LL<<pos);
 }
 bool check(int N,int pos){
-	return (bool)(N & (1<<pos));
+	return (bool)(N & (1LL<<pos));
 }
 
 void yes() {
@@ -72,86 +72,60 @@ void no() {
 	cout << "NO\n";
 }
 
-string preSufEx(string s) {
-	int l = 0, h = s.length() - 1;
-	string res = "";
+int ara[mx], cnt[66];
 
-	while(l < h) {
-		if(s[l] == s[h]) {
-			res += s[l];
-			l++;
-			h--;
-		} else {
-			break;
-		}
+long long binPowRec(long long a, long long b) {
+	if(b < 0) return 0;
+	if (b == 0) return 1;
+
+	long long res = binPowRec(a, b / 2);
+
+	if (b % 2) {
+		res = (res * a) % mod;
 	}
 
-	return res;
-}
-
-string prePal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	fr(i, start, end) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, i - start + 1);
-		}
-	}
-
-	fr(i, start, start + len) {
-		res += s[i];
-	}
-
-	return res;
-}
-
-string suffPal(string s, int start, int end) {
-	int frHsh = 0, bkHsh = 0, base = 1, len = 0;
-	string res = "";
-
-	rfr(i, end, start) {
-		frHsh = (frHsh + base * s[i]) % mod;
-		bkHsh = (bkHsh * seed + s[i]) % mod;
-		base = (base * seed) % mod;
-
-		if(frHsh == bkHsh) {
-			len = max(len, end - i);
-		}
-	}
-
-	rfr(i, end, end - len) {
-		res += s[i];
-	}
-
-	return res;
+	return (res * res) % mod;
 }
 
 int32_t main(){
 	//rin();
 	//wrout();
 	fst;
-
 	int t;
 	cin >> t;
 
 	while(t--) {
-		string str;
-		cin >> str;
+		int n, bitNum = 62;
+		cin >> n;
 
-		string preSuf = preSufEx(str);
-		int start = preSuf.length(), end = str.length() - start;
-		string p = prePal(str, start, end), s = suffPal(str, start, end);
+		mem(cnt, 0LL);
+		for(int i=0; i<n; i++) {
+			cin >> ara[i];
 
-		cout << preSuf;
-		cout << (p.length() > s.length() ? p : s);
+			for(int j=0; j<bitNum; j++) {
+				cnt[j] += ((int) check(ara[i], j));
+			}
+		}
 
-		rev_all(preSuf);
-		cout << preSuf << endl;
+		int ans = 0;
+		for(int i=0; i<n; i++) {
+			int andSum = 0, orSum = 0;
+			for(int j=0; j<bitNum; j++) {
+				int x = (1LL << j) % mod;
+
+				if(check(ara[i], j)) {
+					andSum = (andSum + x * cnt[j])% mod;
+					orSum = (orSum + (x * n)) % mod;
+				} else {
+					orSum = (orSum + cnt[j] * x) % mod;
+				}
+			}
+			//cout << i << " " <<  andSum << " " << orSum << endl;
+
+			ans = (andSum * orSum + ans)% mod;
+		}
+
+		cout << ans << endl;
 	}
 	return 0;
 }
