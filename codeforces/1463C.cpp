@@ -23,14 +23,17 @@ using namespace std;
 #define ub upper_bound
 #define all(v) v.begin(), v.end()
 #define sort_all(v) sort(all(v));
-#define rev_all(v) rev(all(v));
+#define rev_all(v) reverse(all(v));
 #define mem(ara, x) memset(ara, x, sizeof ara)
 
 // Const
 #define mod 1000000007
+// 28722900390631
 #define inf 1e18+19
 #define mx 200015
 #define pi acos(-1.0)
+#define seed 997
+// 769 919 647 839
 
 // Input Output
 #define sild(x) scanf("%lld", &x)
@@ -71,41 +74,41 @@ void no() {
 	cout << "NO\n";
 }
 
-int c[105], p[105], s[105][105];
-
+int ara[mx], dp[515];
 
 int32_t main(){
 	rin();
 	//wrout();
 	fst;
-	int n, m;
+	int n;
+	while (cin >> n) {
+		fr(j, 0, 513) {
+			dp[j] = mod;
+		}
 
-	while(cin >> n >> m) {
-		double res = inf;
+		dp[0] = 0;
 		fr(i, 0, n) {
-			cin >> c[i] >> p[i];
-			s[i] = 0;
+			cin >> ara[i];
 
-			fr(j, 0, p[i]) {
-
-				cin >> x;
-				s[i] += x;
-			}
-
-			double cur[m+4];
-			mem(cur, 0.0);
-
-			fr(j, 0, m) {
-				fr(l, 0, p[i]) {
-					int nxt = min(m, )
+			fr(j, 0, 513) {
+				if(dp[j] != mod && dp[j] < ara[i]) {
+					int x = ara[i] ^ j;
+					dp[x] = min(dp[x], ara[i]);
 				}
 			}
 
-			res = min(res, cur[m]);
+			dp[ara[i]] = min(dp[ara[i]], ara[i]);
 		}
 
-		cout << fixed;
-		cout << setprecision(10) << res << endl;
+		int k = 0;
+		fr(j, 0, 513) {
+			if(dp[j] != mod) k++;
+		}
+
+		cout << k << endl;
+		fr(j, 0, 513) {
+			if(dp[j] != mod) cout <<j << " ";
+		} cout << endl;
 	}
-	return 0;
+
 }

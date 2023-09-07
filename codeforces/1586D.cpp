@@ -23,14 +23,17 @@ using namespace std;
 #define ub upper_bound
 #define all(v) v.begin(), v.end()
 #define sort_all(v) sort(all(v));
-#define rev_all(v) rev(all(v));
+#define rev_all(v) reverse(all(v));
 #define mem(ara, x) memset(ara, x, sizeof ara)
 
 // Const
 #define mod 1000000007
+// 28722900390631
 #define inf 1e18+19
 #define mx 200015
 #define pi acos(-1.0)
+#define seed 997
+// 769 919 647 839
 
 // Input Output
 #define sild(x) scanf("%lld", &x)
@@ -71,41 +74,47 @@ void no() {
 	cout << "NO\n";
 }
 
-int c[105], p[105], s[105][105];
-
+int ara[mx];
 
 int32_t main(){
-	rin();
+	//rin();
 	//wrout();
-	fst;
-	int n, m;
+	//fst;
 
-	while(cin >> n >> m) {
-		double res = inf;
-		fr(i, 0, n) {
-			cin >> c[i] >> p[i];
-			s[i] = 0;
+	int n, x;
+	cin >> n;
 
-			fr(j, 0, p[i]) {
-
-				cin >> x;
-				s[i] += x;
-			}
-
-			double cur[m+4];
-			mem(cur, 0.0);
-
-			fr(j, 0, m) {
-				fr(l, 0, p[i]) {
-					int nxt = min(m, )
-				}
-			}
-
-			res = min(res, cur[m]);
+	ara[n] = -1;
+	for(int i=2; i<=n; i++) {
+		cout << "? ";
+		for(int j=1; j<n; j++) {
+			cout << i << " ";
 		}
+		cout << 1 << endl;
+		cin >> x;
 
-		cout << fixed;
-		cout << setprecision(10) << res << endl;
+		if(x == 0) {
+			ara[n] = i - 1;
+			break;
+		}
 	}
+
+	if(ara[n] == -1) ara[n] = n;
+
+	for(int i=1; i<=n; i++) {
+		if(i == ara[n]) continue;
+		cout << "? ";
+		for(int j=1; j<n; j++) {
+			cout << ara[n] << " ";
+		}
+		cout << i << endl;
+		cin >> x;
+
+		ara[x] = i;
+	}
+
+	cout << "! ";
+	fr(i, 1, n+1) cout << ara[i] << " ";
+	cout << endl;
 	return 0;
 }

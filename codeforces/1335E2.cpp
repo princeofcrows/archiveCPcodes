@@ -23,14 +23,17 @@ using namespace std;
 #define ub upper_bound
 #define all(v) v.begin(), v.end()
 #define sort_all(v) sort(all(v));
-#define rev_all(v) rev(all(v));
+#define rev_all(v) reverse(all(v));
 #define mem(ara, x) memset(ara, x, sizeof ara)
 
 // Const
 #define mod 1000000007
+// 28722900390631
 #define inf 1e18+19
 #define mx 200015
 #define pi acos(-1.0)
+#define seed 997
+// 769 919 647 839
 
 // Input Output
 #define sild(x) scanf("%lld", &x)
@@ -71,41 +74,80 @@ void no() {
 	cout << "NO\n";
 }
 
-int c[105], p[105], s[105][105];
-
+int ara[mx];
 
 int32_t main(){
-	rin();
+	//rin();
 	//wrout();
 	fst;
-	int n, m;
 
-	while(cin >> n >> m) {
-		double res = inf;
-		fr(i, 0, n) {
-			cin >> c[i] >> p[i];
-			s[i] = 0;
+	int t;
+	cin >> t;
 
-			fr(j, 0, p[i]) {
+	while(t--) {
+		int n, ans = 0;
+		cin >> n;
 
-				cin >> x;
-				s[i] += x;
-			}
-
-			double cur[m+4];
-			mem(cur, 0.0);
-
-			fr(j, 0, m) {
-				fr(l, 0, p[i]) {
-					int nxt = min(m, )
-				}
-			}
-
-			res = min(res, cur[m]);
+		ifr(i, 1, n) {
+			cin >> ara[i];
 		}
 
-		cout << fixed;
-		cout << setprecision(10) << res << endl;
+		ifr(i, 1, 200) {
+			int tot = 0, le = 0, ri = 0, m = 0;
+			int cnt[201];
+			mem(cnt, 0);
+
+			ifr(j, 1, n) {
+				tot += (ara[j] == i);
+			}
+
+			//cout << i << " " << tot << endl;
+
+			ans = max(tot, ans);
+			if(tot < 2) continue;
+
+			int l = 1, r = n;
+
+			while(l <= n) {
+				le += (ara[l] == i);
+				if(le == (tot / 2)) break;
+				l++;
+			}
+
+			while(r >= 1) {
+				ri += (ara[r] == i);
+				if(ri == (tot / 2)) break;
+				r--;
+			}
+
+			ifr(j, l+1, r-1) {
+				cnt[ara[j]]++;
+				m = max(m, cnt[ara[j]]);
+			}
+
+			while(l >= 1 && r <= n) {
+				ans = max(ans, le + ri + m);
+				if(ara[l] == i && ara[r] == i) {
+					l--;
+					r++;
+
+					le--;
+					ri--;
+				} else if(l >= 1 && ara[l] != i) {
+					cnt[ara[l]]++;
+					m = max(cnt[ara[l]], m);
+					l--;
+				} else if(r <= n && ara[r] != i) {
+					cnt[ara[r]]++;
+					m = max(cnt[ara[r]], m);
+					r++;
+				}
+
+				//cout << " l->" << le <<  " r->" << ri << " m->" << m << " i->" << i << " tot->" << tot << endl;
+			}
+		}
+
+		cout << ans << endl;
 	}
 	return 0;
 }
