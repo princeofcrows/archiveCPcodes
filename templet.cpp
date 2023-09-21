@@ -1,92 +1,71 @@
-
-/////////////////////////////////////////////////////////////////////////
-//.....................................................................//
-////////////jasper_skywalker___fsociety()___BUET_mashroom////////////////
-//.....................................................................//
-/////////////////////////////////////////////////////////////////////////
-
-#include <map>
-#include <list>
-#include <cmath>
-#include <ctime>
-#include <deque>
-#include <queue>
-#include <stack>
-#include <string>
-#include <bitset>
-#include <cstdio>
-#include <limits>
-#include <vector>
-#include <climits>
-#include <cstring>
-#include <cstdlib>
-#include <fstream>
-#include <numeric>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-vector <pair <long long, long long> > xy;
-vector <pair <long long, long long> > ab;
-vector <long long> x;
-vector <long long> y;
+// Data type
+#define int long long
+#define ll long long
+#define pii pair <int, int>
+#define piii pair <int, pii>
+#define vi vector<int>
+#define vll vector<long long>
+#define vpi vector<pii>
+#define mii map<int, int>
+#define msi map<string, int>
+#define si set<int>
+#define spi set<pii>
 
-string str, str1, str2;
+// Method or var shorthands
+#define fi first
+#define se second
+#define pb push_back
+#define lb lower_bound
+#define ub upper_bound
+#define all(v) v.begin(), v.end()
+#define sort_all(v) sort(all(v));
+#define rev_all(v) reverse(all(v));
+#define mem(ara, x) memset(ara, x, sizeof ara)
 
-long long ara[200005];
+// Const
+#define mod 1000000007
+// 28722900390631
+#define inf 1e18+19
+#define mx 200015
+#define pi acos(-1.0)
+#define seed 997
+// 769 919 647 839
 
-bool compare(pair <long long, long long> i, pair <long long, long long> j){
-    return (i.first<j.first);
+// Input Output
+#define sild(x) scanf("%lld", &x)
+#define sid(x) scanf("%d", &x)
+#define rin() freopen("in.txt", "r", stdin)
+#define wrout() freopen("out.txt", "w", stdout)
+#define fst ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+// Loops
+#define fr(i,s,e) for(int i=s; i<e; i++)
+#define ifr(i,s,e) for(int i=s; i<=e; i++)
+#define rfr(i,e,s) for(int i=e-1; i>=s; i--)
+
+// Functions
+ll gcd(ll a,ll b) { if (b==0) return a; return gcd(b, a%b); }
+ll lcm(ll a,ll b) { return a/gcd(a,b)*b; }
+int Set(int N,int pos) { return N=N | (1<<pos); }
+int reset(int N,int pos) { return N= N & ~(1<<pos); }
+bool check(int N,int pos){ return (bool)(N & (1<<pos)); }
+void yes() { cout << "YES\n"; }
+void no() { cout << "NO\n"; }
+
+int32_t main(){
+	//rin();
+	//wrout();
+	fst;
+
+	int t;
+	cin >> t;
+
+	while(t--) {
+        
+	}
+	return 0;
 }
-
-bool compare2(pair <long long, long long> i, pair <long long, long long> j){
-    return (i.first>j.first);
-}
-
-long long gcd(long long a, long long b){
-    if(a%b==0) return b;
-    return gcd(b, a%b);
-}
-
-//____________________________________________________________________________________//
-//_________________________naturalprogrmmersdontusetemplets___________________________//
-//____________________________________________________________________________________//
-
-long double powr(long double n, long double ne){
-    if(n==1.0) return ne;
-    long double e = powr(n/2.0, ne);
-    e = e*e;
-    if(n/2.0!=floor(n/2.0)) e = e*ne;
-    return e;
-}
-
-
-int main() {
-    //freopen("in.txt", "r", stdin);
-    long long int ans, temp, t, j, i, m, h, h2, m2, c, a, b, mx, k;
-    long double ne = 100000000000000000.0;
-    long double n = ne;
-    ne = (ne+1)/ne;
-    long double e;
-    e = powr(n, ne);
-    cout.precision(15);
-    cout << e;
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
